@@ -1,0 +1,19 @@
+role,recommended_skill,priority,market_demand
+data engineer,data engineering,High,200
+data engineer,aws,High,95
+data engineer,azure,High,87
+data engineer,spark,High,66
+data engineer,data modeling,High,50
+data engineer,data warehousing,Medium,42
+data engineer,data analysis,Medium,39
+data engineer,java,Medium,37
+data engineer,machine learning,Medium,32
+data engineer,data quality,Medium,28
+data engineer,data integration,Low,26
+data engineer,snowflake,Low,26
+data engineer,gcp,Low,24
+data engineer,scala,Low,23
+data engineer,data visualization,Low,22
+data engineer,tableau,Low,22
+data engineer,data governance,Low,21
+data engineer,kafka,Low,21

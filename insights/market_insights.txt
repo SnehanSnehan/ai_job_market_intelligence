@@ -1,0 +1,45 @@
+=== OVERALL AI JOB MARKET INSIGHTS ===
+Top 10 most in-demand skills across AI jobs:
+- sql (9300 postings)
+- machine learning (5807 postings)
+- python (5210 postings)
+- data engineering (4619 postings)
+- aws (3586 postings)
+- data analysis (3293 postings)
+- azure (2705 postings)
+- communication (2506 postings)
+- data visualization (2330 postings)
+- spark (2233 postings)
+
+Insight: Core programming (Python, SQL) and cloud platforms (AWS, Azure) dominate AI job requirements, indicating strong demand for production-ready AI professionals.
+
+=== ROLE-WISE SKILL INSIGHTS ===
+
+Role: Data Engineer
+- sql (210)
+- data engineering (200)
+- python (106)
+- aws (95)
+- azure (87)
+Insight: This role emphasizes both technical depth and domain-specific tools.
+
+Role: Data Scientist
+- machine learning (116)
+- python (108)
+- sql (98)
+- data science (76)
+- statistics (66)
+Insight: This role emphasizes both technical depth and domain-specific tools.
+
+Role: Machine Learning Engineer
+- machine learning (86)
+- python (40)
+- tensorflow (31)
+- pytorch (26)
+- sql (25)
+Insight: This role emphasizes both technical depth and domain-specific tools.
+
+=== CAREER & LEARNING INSIGHTS ===
+- Candidates lacking cloud or big data skills face significant skill gaps.
+- Learning paths should combine ML fundamentals with engineering tools.
+- Skill overlap across roles suggests flexibility in transitioning between AI roles.
