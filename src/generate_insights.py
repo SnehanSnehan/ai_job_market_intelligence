@@ -11,10 +11,7 @@ top_overall = pd.read_csv(DATA_DIR / "top_skills_overall.csv")
 top_by_role = pd.read_csv(DATA_DIR / "top_skills_by_role.csv")
 
 insights = []
-
-# -------------------------------------------------
 # Overall Market Insights
-# -------------------------------------------------
 insights.append("=== OVERALL AI JOB MARKET INSIGHTS ===\n")
 
 top_10_overall = top_overall.head(10)
@@ -28,10 +25,7 @@ insights.append(
     "(AWS, Azure) dominate AI job requirements, indicating strong demand "
     "for production-ready AI professionals.\n\n"
 )
-
-# -------------------------------------------------
 # Role-wise Insights
-# -------------------------------------------------
 insights.append("=== ROLE-WISE SKILL INSIGHTS ===\n")
 
 roles = top_by_role["job_title_clean"].unique()
@@ -47,9 +41,7 @@ for role in roles:
         "Insight: This role emphasizes both technical depth and domain-specific tools.\n"
     )
 
-# -------------------------------------------------
 # Learning & Career Insights
-# -------------------------------------------------
 insights.append("\n=== CAREER & LEARNING INSIGHTS ===\n")
 
 insights.append(
