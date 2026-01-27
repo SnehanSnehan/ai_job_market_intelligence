@@ -1,4 +1,4 @@
-# clean_skills.py
+
 # This script loads and inspects job skills data
 
 import pandas as pd
@@ -20,10 +20,7 @@ print(skills_df.head(10))
 # Check for missing values
 print("\nMissing values per column:")
 print(skills_df.isnull().sum())
-
-# ---------------------------------------------------
 # Clean and normalize skills
-# ---------------------------------------------------
 
 # Drop rows where job_skills is missing
 skills_df = skills_df.dropna(subset=["job_skills"])
@@ -57,11 +54,7 @@ print(skills_exploded.head(10))
 
 print("\nTotal unique skills:")
 print(skills_exploded["skill"].nunique())
-
-
-# ---------------------------------------------------
 # Save cleaned skills data
-# ---------------------------------------------------
 
 output_path = "data/job_skills_cleaned.csv"
 skills_exploded.to_csv(output_path, index=False)
