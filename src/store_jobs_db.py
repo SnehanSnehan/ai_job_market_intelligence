@@ -1,4 +1,4 @@
-# store_jobs_db.py
+
 import pandas as pd
 from sqlalchemy import create_engine
 
