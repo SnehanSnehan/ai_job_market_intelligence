@@ -4,10 +4,7 @@ import streamlit as st
 import seaborn as sns
 import matplotlib.pyplot as plt
 import os
-
-# ----------------------------
 # 1. Load data
-# ----------------------------
 jobs_file = "data/job_postings_cleaned.csv"
 top_skills_file = "data/top_skills_by_role.csv"
 
@@ -18,9 +15,7 @@ role_skill_counts = pd.read_csv(top_skills_file)
 jobs_df.columns = jobs_df.columns.str.strip()
 role_skill_counts.columns = role_skill_counts.columns.str.strip()
 
-# ----------------------------
 # 2. Streamlit app layout
-# ----------------------------
 st.title("📊 AI Job Market Intelligence Dashboard")
 
 # --- User Inputs ---
@@ -34,10 +29,7 @@ skills_input = st.text_input(
 
 candidate_skills = [s.strip().lower() for s in skills_input.split(",") if s.strip()]
 st.markdown(f"**Candidate skills:** {candidate_skills}")
-
-# ----------------------------
 # 3. Filter top skills for selected role
-# ----------------------------
 role_skills = role_skill_counts[role_skill_counts['job_title_clean'] == selected_role]
 
 # Sort by count descending
@@ -49,9 +41,7 @@ top20 = role_skills.head(20)
 st.markdown(f"🔥 Top Skills for {selected_role}")
 st.dataframe(top20.reset_index(drop=True))
 
-# ----------------------------
 # 4. Generate recommendations dynamically
-# ----------------------------
 st.markdown("🎯 **Learning Recommendations**")
 
 # Recommendation priority based on top 20
@@ -73,9 +63,7 @@ if recommendations:
 else:
     st.write("You already have all top skills for this role! 🎉")
 
-# ----------------------------
 # 5. Visualization
-# ----------------------------
 st.markdown(f"📊 **Top Skills Visualization for {selected_role}**")
 
 plt.figure(figsize=(10, 6))
