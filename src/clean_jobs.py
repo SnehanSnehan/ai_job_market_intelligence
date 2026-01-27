@@ -1,4 +1,4 @@
-# clean_jobs.py
+
 # This script loads job data from SQLite and performs basic cleaning
 
 import pandas as pd
@@ -45,11 +45,7 @@ print(df_clean.shape)
 print("\nSample cleaned data:")
 print(df_clean.head())
 
-
-# ---------------------------------------------------
 # Standardize job titles for analysis
-# ---------------------------------------------------
-
 def clean_job_title(title):
     """
     Cleans and standardizes a job title string.
@@ -72,10 +68,7 @@ df_clean["job_title_clean"] = df_clean["job_title"].apply(clean_job_title)
 
 print("\nCleaned job titles (sample):")
 print(df_clean[["job_title", "job_title_clean"]].head())
-
-# ---------------------------------------------------
 # Save cleaned job data for later phases
-# ---------------------------------------------------
 
 output_path = "data/job_postings_cleaned.csv"
 df_clean.to_csv(output_path, index=False)
