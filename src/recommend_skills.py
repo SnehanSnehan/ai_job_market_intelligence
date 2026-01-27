@@ -1,11 +1,11 @@
-# src/app.py
+
 
 import streamlit as st
 import pandas as pd
 
-# -------------------------------
+
 # Load preprocessed data
-# -------------------------------
+
 top_skills_by_role_file = "data/top_skills_by_role.csv"
 top_skills_overall_file = "data/top_skills_overall.csv"
 
@@ -15,9 +15,9 @@ top_skills_overall_df = pd.read_csv(top_skills_overall_file)
 # Get unique roles dynamically
 roles = sorted(top_skills_role_df['job_title_clean'].unique())
 
-# -------------------------------
+
 # Streamlit UI
-# -------------------------------
+
 st.title("📊 AI Job Market Intelligence Dashboard")
 
 st.sidebar.header("User Input")
@@ -27,9 +27,9 @@ candidate_skills_input = st.sidebar.text_input(
 )
 candidate_skills = [s.strip().lower() for s in candidate_skills_input.split(",") if s.strip()]
 
-# -------------------------------
+
 # Top Skills for Selected Role
-# -------------------------------
+
 st.subheader(f"🔥 Top Skills for {selected_role.title()}")
 
 role_top_skills = (
@@ -37,10 +37,7 @@ role_top_skills = (
     .sort_values("count", ascending=False)
 )
 st.dataframe(role_top_skills.reset_index(drop=True))
-
-# -------------------------------
 # Skill Gap Calculation
-# -------------------------------
 if candidate_skills:
     role_skills_list = role_top_skills['skill_normalized'].str.lower().tolist()
     matched_skills = [s for s in candidate_skills if s in role_skills_list]
@@ -56,9 +53,7 @@ else:
     st.subheader("📉 Skill Gap")
     st.write("Enter your skills above to see skill gap and recommendations.")
 
-# -------------------------------
 # Learning Recommendations
-# -------------------------------
 st.subheader("🎯 Learning Recommendations")
 if candidate_skills:
     # Assign priority based on count
@@ -87,9 +82,6 @@ if candidate_skills:
         st.write("You already have all top skills for this role! 🎉")
 else:
     st.write("Enter your skills above to generate recommendations.")
-
-# -------------------------------
 # Top Skills Visualization
-# -------------------------------
 st.subheader(f"📊 Top Skills Visualization for {selected_role.title()}")
 st.bar_chart(role_top_skills.set_index("skill_normalized")["count"])
