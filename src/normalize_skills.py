@@ -1,18 +1,14 @@
 import pandas as pd
 
-# -------------------------------------------------
 # 1. Load cleaned skills data
-# -------------------------------------------------
 skills_df = pd.read_csv("data/job_skills_cleaned.csv")
 
 print("Initial rows:", len(skills_df))
 print(skills_df.head())
 
 
-# -------------------------------------------------
 # 2. Define canonical skill mapping
-# (human-written, expandable)
-# -------------------------------------------------
+
 SKILL_MAP = {
     "python": ["python", "python programming"],
     "sql": ["sql", "postgres", "mysql", "sqlite"],
@@ -32,10 +28,7 @@ SKILL_MAP = {
     "statistics": ["statistics", "statistical modeling"],
 }
 
-
-# -------------------------------------------------
 # 3. Normalize skill names
-# -------------------------------------------------
 def normalize_skill(skill: str) -> str:
     skill = skill.lower().strip()
 
@@ -52,10 +45,8 @@ skills_df["skill_normalized"] = skills_df["skill"].apply(normalize_skill)
 print("\nAfter normalization:")
 print(skills_df[["skill", "skill_normalized"]].head(15))
 
-
-# -------------------------------------------------
 # 4. Save normalized skills
-# -------------------------------------------------
+
 output_path = "data/job_skills_normalized.csv"
 skills_df.to_csv(output_path, index=False)
 
