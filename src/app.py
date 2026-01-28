@@ -1,22 +1,18 @@
-# app.py
+
 import pandas as pd
 import streamlit as st
 import seaborn as sns
 import matplotlib.pyplot as plt
 import os
 
-# ----------------------------
-# Page configuration (appearance only)
-# ----------------------------
 st.set_page_config(
     page_title="AI Job Market Intelligence",
     page_icon="📊",
     layout="wide"
 )
 
-# ----------------------------
+
 # 1. Load data
-# ----------------------------
 jobs_file = "data/job_postings_cleaned.csv"
 top_skills_file = "data/top_skills_by_role.csv"
 
@@ -26,9 +22,7 @@ role_skill_counts = pd.read_csv(top_skills_file)
 jobs_df.columns = jobs_df.columns.str.strip()
 role_skill_counts.columns = role_skill_counts.columns.str.strip()
 
-# ----------------------------
 # 2. Header
-# ----------------------------
 st.title("📊 AI Job Market Intelligence Dashboard")
 st.markdown(
     "Analyze real job postings to understand **in-demand skills**, "
@@ -36,9 +30,7 @@ st.markdown(
 )
 st.markdown("---")
 
-# ----------------------------
 # 3. User Inputs (clean layout)
-# ----------------------------
 input_col1, input_col2 = st.columns([1, 2])
 
 with input_col1:
@@ -60,9 +52,7 @@ st.markdown(
 
 st.markdown("---")
 
-# ----------------------------
 # 4. Top skills table
-# ----------------------------
 role_skills = role_skill_counts[
     role_skill_counts['job_title_clean'] == selected_role
 ].sort_values("count", ascending=False)
@@ -77,9 +67,7 @@ st.dataframe(
 
 st.markdown("---")
 
-# ----------------------------
 # 5. Learning recommendations
-# ----------------------------
 st.subheader("🎯 Learning Recommendations")
 
 recommendations = []
@@ -102,9 +90,7 @@ else:
 
 st.markdown("---")
 
-# ----------------------------
 # 6. Visualization
-# ----------------------------
 st.subheader(f"📊 Top Skills Visualization for {selected_role}")
 
 fig, ax = plt.subplots(figsize=(10, 6))
