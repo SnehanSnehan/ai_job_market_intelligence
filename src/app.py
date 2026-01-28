@@ -4,79 +4,121 @@ import streamlit as st
 import seaborn as sns
 import matplotlib.pyplot as plt
 import os
+
+# ----------------------------
+# Page configuration (appearance only)
+# ----------------------------
+st.set_page_config(
+    page_title="AI Job Market Intelligence",
+    page_icon="📊",
+    layout="wide"
+)
+
+# ----------------------------
 # 1. Load data
+# ----------------------------
 jobs_file = "data/job_postings_cleaned.csv"
 top_skills_file = "data/top_skills_by_role.csv"
 
 jobs_df = pd.read_csv(jobs_file)
 role_skill_counts = pd.read_csv(top_skills_file)
 
-# Ensure clean column names
 jobs_df.columns = jobs_df.columns.str.strip()
 role_skill_counts.columns = role_skill_counts.columns.str.strip()
 
-# 2. Streamlit app layout
+# ----------------------------
+# 2. Header
+# ----------------------------
 st.title("📊 AI Job Market Intelligence Dashboard")
-
-# --- User Inputs ---
-roles = role_skill_counts['job_title_clean'].unique().tolist()
-selected_role = st.selectbox("Select your target role", options=roles)
-
-skills_input = st.text_input(
-    "Enter your skills (comma separated)", 
-    placeholder="e.g., Python, SQL, Machine Learning"
+st.markdown(
+    "Analyze real job postings to understand **in-demand skills**, "
+    "**market trends**, and **personalized learning paths**."
 )
+st.markdown("---")
+
+# ----------------------------
+# 3. User Inputs (clean layout)
+# ----------------------------
+input_col1, input_col2 = st.columns([1, 2])
+
+with input_col1:
+    roles = role_skill_counts['job_title_clean'].unique().tolist()
+    selected_role = st.selectbox("🎯 Select your target role", options=roles)
+
+with input_col2:
+    skills_input = st.text_input(
+        "🧠 Enter your skills (comma separated)",
+        placeholder="e.g., Python, SQL, Machine Learning"
+    )
 
 candidate_skills = [s.strip().lower() for s in skills_input.split(",") if s.strip()]
-st.markdown(f"**Candidate skills:** {candidate_skills}")
-# 3. Filter top skills for selected role
-role_skills = role_skill_counts[role_skill_counts['job_title_clean'] == selected_role]
 
-# Sort by count descending
-role_skills = role_skills.sort_values("count", ascending=False)
+st.markdown(
+    f"**Candidate skills:** "
+    f"`{', '.join(candidate_skills) if candidate_skills else 'None entered'}`"
+)
 
-# Top 20 skills for visualization
+st.markdown("---")
+
+# ----------------------------
+# 4. Top skills table
+# ----------------------------
+role_skills = role_skill_counts[
+    role_skill_counts['job_title_clean'] == selected_role
+].sort_values("count", ascending=False)
+
 top20 = role_skills.head(20)
 
-st.markdown(f"🔥 Top Skills for {selected_role}")
-st.dataframe(top20.reset_index(drop=True))
+st.subheader(f"🔥 Top Skills for {selected_role}")
+st.dataframe(
+    top20.reset_index(drop=True),
+    use_container_width=True
+)
 
-# 4. Generate recommendations dynamically
-st.markdown("🎯 **Learning Recommendations**")
+st.markdown("---")
 
-# Recommendation priority based on top 20
+# ----------------------------
+# 5. Learning recommendations
+# ----------------------------
+st.subheader("🎯 Learning Recommendations")
+
 recommendations = []
 for idx, row in top20.iterrows():
     skill = row['skill_normalized']
     if skill.lower() not in candidate_skills:
         priority = "High" if idx < 5 else "Medium" if idx < 10 else "Low"
         recommendations.append({
-            "role": selected_role,
-            "recommended_skill": skill,
-            "priority": priority,
-            "market_demand": row['count']
+            "Role": selected_role,
+            "Recommended Skill": skill,
+            "Priority": priority,
+            "Market Demand": row['count']
         })
 
 if recommendations:
     rec_df = pd.DataFrame(recommendations)
-    st.dataframe(rec_df)
+    st.dataframe(rec_df, use_container_width=True)
 else:
-    st.write("You already have all top skills for this role! 🎉")
+    st.success("You already have all top skills for this role! 🎉")
 
-# 5. Visualization
-st.markdown(f"📊 **Top Skills Visualization for {selected_role}**")
+st.markdown("---")
 
-plt.figure(figsize=(10, 6))
+# ----------------------------
+# 6. Visualization
+# ----------------------------
+st.subheader(f"📊 Top Skills Visualization for {selected_role}")
+
+fig, ax = plt.subplots(figsize=(10, 6))
 sns.barplot(
     x="count",
     y="skill_normalized",
     data=top20,
     palette="magma",
-    dodge=False
+    ax=ax
 )
-plt.title(f"Top 20 Skills for {selected_role}")
-plt.xlabel("Job Postings Count")
-plt.ylabel("Skill")
-plt.tight_layout()
-st.pyplot(plt.gcf())
-plt.clf()
+
+ax.set_title(f"Top 20 Skills for {selected_role}", fontsize=14)
+ax.set_xlabel("Job Postings Count")
+ax.set_ylabel("Skill")
+
+st.pyplot(fig)
+plt.close(fig)
